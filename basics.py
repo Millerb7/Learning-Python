@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from PIL import Image
 
-orig = np.array(Image.open('./stock_img/emma.jpg'))
+orig = np.array(Image.open('./stock_img/juice.jpg'))
 
 # inverts the image :D
 # using binary operation 
@@ -23,7 +23,7 @@ for x in range(len(img)):
     for y in range(len(img[x])):
         img[x,y] = ~img[x,y]
 
-path = 'negative.jpg'
+path = './basics/negative.jpg'
 pil_img = Image.fromarray(img)
 pil_img.save(path)
 
@@ -38,7 +38,7 @@ for x in range(len(img)):
         pixel = sum(img[x,y])//3
         img[x,y] = [pixel,pixel,pixel]
 
-path = 'greyscale.jpg'
+path = './basics/greyscale.jpg'
 pil_img = Image.fromarray(img)
 pil_img.save(path)
 
@@ -52,7 +52,7 @@ img = orig.copy()
 # poor image quality but efficient
 img[:, :, (1,2)] = 0
 
-path = 'quickcolorscale.jpg'
+path = './basics/quickcolorscale.jpg'
 pil_img = Image.fromarray(img)
 pil_img.save(path)
 
@@ -66,7 +66,7 @@ for x in range(len(img)):
         pixel = sum(img[x,y])//3
         img[x,y] = [pixel,0,0]
 
-path = 'colorscale.jpg'
+path = './basics/colorscale.jpg'
 pil_img = Image.fromarray(img)
 pil_img.save(path)
 
@@ -75,7 +75,7 @@ img = orig.copy()
 # this just removes the decimal values, making the value of each pixel less precise every time
 img = (img // 128) * 128
 
-path = 'reduction.jpg'
+path = './basics/reduction.jpg'
 pil_img = Image.fromarray(img)
 pil_img.save(path)
 
@@ -86,6 +86,21 @@ img = orig.copy()
 # rendering every pixel as black or white
 img = ((img > 128) * 255).astype(np.uint8)
 
-path = 'binarize.jpg'
+path = './basics/binarize.jpg'
+pil_img = Image.fromarray(img)
+pil_img.save(path)
+
+img = orig.copy()
+
+pixel = img[100,60]
+print(pixel)
+for x in range(len(img)):
+    for y in range(len(img[x])):
+        # absolute difference 
+        diff = abs(sum(img[x,y]//3)-sum(img[100,60]//3))
+        if(diff < 20):
+            img[x,y] = ~img[x,y]
+
+path = './basics/selecting.jpg'
 pil_img = Image.fromarray(img)
 pil_img.save(path)
